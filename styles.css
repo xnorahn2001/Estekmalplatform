@@ -1,0 +1,642 @@
+/* ================================================= */
+/* الإعداد العام - GENERAL SETUP */
+/* ================================================= */
+* { box-sizing: border-box; }
+html, body { 
+    margin:0; 
+    padding:0; 
+    /* استخدام خط Tajawal */
+    font-family: "Tajawal", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif; 
+    background:#f7fafc; /* خلفية الصفحة فاتحة */
+    color:#1f2937; 
+    direction:rtl; 
+    line-height: 1.6; 
+}
+
+/* ================================================= */
+/* ** تنسيقات التحكم بالتحميل والسبلاش ** */
+/* ================================================= */
+
+/* حالة التحميل: إخفاء المحتوى الرئيسي */
+body.loading-state #mainContent {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* تنسيق المحتوى الرئيسي ليظهر بتدرج بعد الإخفاء */
+#mainContent {
+    transition: opacity 0.5s ease-in, visibility 0.5s;
+}
+
+/* ** هيكل وتنسيق شاشة البداية (SPLASH SCREEN) ** */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.7s ease-out, visibility 0.7s ease-out;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.splash-logo {
+    height: 80px; /* حجم أكبر للشعار */
+    width: auto;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,.1));
+}
+
+/* حركات السبلاش */
+.platform-logo {
+    transform: translateX(-100px);
+    animation: slideInLeft 1s forwards ease-out;
+}
+
+.rfaq-logo {
+    transform: translateX(100px);
+    animation: slideInRight 1s forwards ease-out;
+}
+
+.logo-separator {
+    font-size: 50px;
+    color: #065f52;
+    opacity: 0;
+    animation: fadeIn 0.5s 0.8s forwards; 
+}
+
+.loading-bar {
+    width: 200px;
+    height: 6px;
+    background-color: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.loading-bar::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 50%;
+    background-color: #10b981;
+    animation: loadingFill 1.5s infinite linear;
+}
+
+/* الأنماط الحركية (Keyframes) */
+@keyframes slideInLeft {
+    0% { transform: translateX(-200px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+    0% { transform: translateX(200px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes loadingFill {
+    0% { transform: translateX(-100%) }
+    100% { transform: translateX(100%) }
+}
+
+/* حالة إخفاء شاشة البداية */
+.splash-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* ================================================= */
+/* تنسيقات الواجهة الرئيسية (بقية التنسيقات المدمجة) */
+/* ================================================= */
+
+/* الروابط - LINKS */
+a { color:#065f52; text-decoration:none; transition: color 0.3s; }
+a:hover { color: #10b981; }
+
+/* الحاوية - CONTAINER */
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+/* الرأس - HEADER (Modern Look) */
+.header { 
+    background:#fff; 
+    border-bottom:1px solid #e5e7eb; 
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05); 
+    padding: 12px 16px;
+}
+.brand { display:flex; align-items:center; gap:12px; }
+.logo { 
+    height:52px; 
+    width:auto; 
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,.1)); 
+}
+.title { margin:0; font-size:26px; color:#065f52; font-weight: 800; }
+.subtitle { margin:2px 0 0; color:#475569; font-size:14px; }
+
+/* البطاقات - CARDS (Elevated Modern Style) */
+.card { 
+    background:#fff; 
+    border:1px solid #e5e7eb; 
+    border-radius:16px; 
+    margin:20px 0; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); 
+    transition: box-shadow 0.3s;
+}
+.card:hover {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+}
+.card-header { 
+    padding:16px 20px; 
+    border-bottom:1px solid #c8e8e2; 
+    background:#e6f7f3; 
+    border-radius:16px 16px 0 0; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+}
+.card-title { margin:0; color:#065f52; font-size:18px; font-weight: 700; }
+.card-desc { margin:6px 0 0; color:#475569; font-size: 14px; }
+.card-content { padding:20px; }
+.card-footer { 
+    padding: 16px 20px; 
+    border-top: 1px solid #e5e7eb; 
+    background: #fcfcfc; 
+    border-radius: 0 0 16px 16px; 
+}
+
+/* صف الادخال - INPUT ROW */
+.row { display:flex; gap:10px; align-items:center; max-width:100%; }
+.input { 
+    flex:1; 
+    padding:12px 14px; 
+    border:1px solid #b8e2d9; 
+    border-radius:10px; 
+    text-align:right; 
+    font-size:16px; 
+    color: #1f2937;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.input:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    outline: none;
+}
+.input-file-hidden { display: none !important; }
+.hidden-input { display: none !important; } /* تم التوحيد مع الكلاس المستخدم في JS */
+
+/* ازرار عادية - REGULAR BUTTONS */
+.actions { display: flex; gap: 12px; justify-content: flex-start; } 
+.actions.income-actions, .actions.mt-12 { justify-content: flex-end; } 
+
+.btn { 
+    padding:12px 20px; 
+    border:none; 
+    border-radius:10px; 
+    background: linear-gradient(135deg,#065f52 0%,#10b981 100%); 
+    color:#fff; 
+    cursor:pointer; 
+    font-weight:700; 
+    transition: all 0.2s; 
+    box-shadow:0 4px 10px rgba(6, 95, 82, 0.3); 
+}
+.btn.secondary { 
+    background: #e6f7f3; 
+    color:#065f52; 
+    box-shadow: none; 
+    border: 1px solid #b8e2d9; 
+    background: none; /* إلغاء التدرج للزر الثانوي */
+}
+.btn.danger { 
+    background:#ef4444; 
+    color:#fff; 
+    box-shadow:0 4px 10px rgba(239, 68, 68, 0.3); 
+}
+.btn:hover { 
+    transform: translateY(-2px); 
+    box-shadow:0 8px 20px rgba(6, 95, 82, 0.4); 
+}
+.btn.secondary:hover {
+    transform: translateY(-2px); 
+    background: #f3fcf9;
+    box-shadow:0 4px 8px rgba(0, 0, 0, 0.05); 
+}
+.btn:disabled { opacity:.6; cursor:not-allowed; transform: none; box-shadow: none; }
+
+/* أزرار التعديل الصغيره */
+.btn-edit, .btn-save, .btn-delete, .btn-cancel { 
+    padding:8px 12px; 
+    border:none; 
+    border-radius:8px; 
+    cursor:pointer; 
+    font-size:14px; 
+    font-weight:600; 
+    transition: background 0.2s, transform 0.2s;
+}
+.btn-edit { background:#d1fae5; color:#065f52; }
+.btn-save { background:#065f52; color:#fff; }
+.btn-cancel { background: #e6f7f3; color:#065f52; }
+.btn-delete { background:#fee2e2; color:#991b1b; }
+
+.btn-edit:hover, .btn-save:hover, .btn-delete:hover, .btn-cancel:hover {
+    transform: translateY(-1px);
+}
+
+/* التنبيهات - ALERTS (محدثة) */
+.alert { 
+    position: relative; /* إزالة التثبيت */
+    margin: 20px auto; /* توسيط وهامش */
+    z-index: 50; 
+    padding:12px 16px; 
+    border-radius:10px; 
+    font-weight:600; 
+    width: 100%; 
+    max-width: 960px; /* ليتناسب مع الحاوية */
+    text-align: right; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: all 0.3s ease-in-out; 
+    opacity: 1;
+}
+
+.alert.error { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; } 
+.alert.success { background:#d1fae5; color:#065f52; border:1px solid #6ee7b7; } 
+.hidden { 
+    display:none !important;
+    opacity: 0;
+}
+
+/* شبكة الحقول - GRID SYSTEM */
+.grid { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:20px; } 
+
+/* ** تنسيق شبكة المرفقات (عمودين) - ATTACHMENTS GRID ** */
+.attachments-grid { 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 20px; 
+}
+@media(max-width: 600px) {
+    .attachments-grid { 
+        grid-template-columns: repeat(1, minmax(0, 1fr)); 
+    }
+}
+
+.field label { display:block; font-size:13px; color:#475569; margin-bottom:4px; font-weight: 500; } 
+.field p { margin:0; font-size:16px; color:#1f2937; font-weight: 600; } 
+.field.full { grid-column:1 / -1; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+.input-small { 
+    padding: 8px; 
+    border: 1px solid #b8e2d9; 
+    border-radius: 6px; 
+    width: 100%; 
+    text-align: right; 
+    color: #1f2937;
+}
+.input-small:disabled { background: #f0f4f7; cursor: default; color: #475569; } 
+.input-small:not(:disabled) { background: #fff; border-color: #065f52; } 
+
+/* تلميح جديد */
+.hint { margin-top: 4px !important; font-size: 11px !important; color: #718096 !important; } 
+
+/* حقل اجمالي الدخل */
+.total-income-field { margin-top: 15px; border-top: 2px solid #e5e7eb; padding-top: 15px; }
+.total-income-field label { color: #065f52; font-size: 18px; }
+.total-income { 
+    font-size: 24px !important; 
+    font-weight: 800; 
+    color: #ef4444 !important; /* لون أحمر لتسليط الضوء على الإجمالي */
+    display: block; 
+    padding: 4px 0;
+}
+
+/* شارة */
+.badge { display:inline-block; padding:4px 12px; border-radius:999px; background:#d1fae5; color:#065f52; font-weight:700; font-size: 12px; }
+
+/* قائمة الايتام */
+.orphans-list { display:grid; grid-template-columns:repeat(1,1fr); gap:15px; }
+@media(min-width:720px){ .orphans-list{ grid-template-columns: repeat(2,1fr); } } 
+.orphans-list .o { 
+  padding:15px; 
+  border:1px solid #b8e2d9; 
+  border-radius:12px; 
+  background:#f1fcf9; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+  display: flex;
+  flex-direction: column;
+}
+.orphans-list .o strong { display: block; margin-bottom: 4px; color: #065f52; font-size: 17px; }
+.orphans-list .o span { font-size: 14px; color: #475569; }
+.orphans-list .o .age-gender { margin-top: 4px; font-size: 13px; color: #64748b; }
+.orphans-list .o .editable-input { 
+    width: 100%; 
+    padding: 8px; 
+    margin: 4px 0; 
+    border: 1px solid #b8e2d9; 
+    border-radius: 6px; 
+    font-size: 14px; 
+    text-align: right; 
+}
+.orphans-list .o .editable-input:disabled { background: #eef4f7; cursor: default; }
+.orphans-list .o .date-inputs { display: flex; gap: 4px; }
+.orphans-list .o .date-inputs input { text-align: center; }
+
+/* ازرار التعديل للتابعين */
+.o .actions { justify-content: flex-start; margin-top: 8px; }
+
+/* تصميم نتائج */
+#attachmentsList { display:flex; flex-direction:column; gap:8px; }
+.attachment-item { 
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+    gap:8px; 
+    padding:10px; 
+    border-radius:8px; 
+    background:#fff; 
+    border:1px solid #e5e7eb; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+.attachment-item a { color:#065f52; font-weight:700; text-decoration:none; }
+.attachment-item .small { font-size:12px; color:#64748b; }
+
+/* ** تنسيقات نموذج التعديل الأساسي ** */
+.card-edit { margin-top:16px; border:1px dashed #b8e2d9; background: #fcfcfc; border-radius: 12px; padding: 20px; }
+.card-edit .input-group {
+    margin-bottom: 16px; 
+    width: 100%; 
+}
+.card-edit .input-group label {
+    display: block;
+    font-size: 15px; 
+    color: #065f52; 
+    margin-bottom: 6px;
+    font-weight: 700; 
+}
+.card-edit .input-group .input {
+    width: 100%; 
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #065f52; 
+    text-align: right;
+    flex: none; 
+}
+.card-edit .actions {
+    margin-top: 25px;
+    justify-content: flex-end; 
+}
+
+.large-attachment-label {
+    display: block;
+    font-size: 16px; 
+    color: #065f52;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+.file-link-container { 
+    margin-top: 6px; 
+    margin-bottom: 10px; 
+    padding: 8px 12px;
+    background: #f1fcf9;
+    border-radius: 8px;
+    border: 1px solid #b8e2d9;
+}
+.file-link-container a {
+    color: #065f52;
+    font-weight: 600;
+}
+.file-link-container:empty:before {
+    content: "لا يوجد مرفق حالياً.";
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+/* ================================================= */
+/* ** تنسيق زر التحميل المودرن المتحرك (Documents-btn) ** */
+/* تم ضبط القيم بناءً على عرض 170px وارتفاع 45px */
+/* ================================================= */
+
+.attachment-container { position: relative; width: 170px; margin-top: 10px; } 
+
+.Documents-btn {
+    --main-color: #065f52; 
+    --hover-color: #10b981; 
+    
+    position: relative;
+    width: 100%; 
+    height: 45px; 
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+    
+    border: 1px solid var(--main-color); 
+    background-color: var(--hover-color); 
+    overflow: hidden;
+    border-radius: 10px; 
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); 
+    transition: all 0.3s;
+}
+
+.Documents-btn, .Documents-btn .folderContainer, .Documents-btn .text {
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+}
+
+.Documents-btn .text {
+    transform: translateX(-15px); 
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    z-index: 10;
+    white-space: nowrap;
+}
+
+.Documents-btn .folderContainer {
+    position: absolute;
+    transform: translateX(170px); 
+    height: 100%;
+    width: 45px; 
+    background-color: var(--main-color); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0; 
+}
+
+.Documents-btn .fileBack, .Documents-btn .filePage, .Documents-btn .fileFront {
+    width: 30px; 
+    height: 30px; 
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%); 
+}
+.Documents-btn .filePage {
+    opacity: 0; 
+}
+
+
+/* تأثير التحويم (Hover Effect) */
+.Documents-btn:hover {
+    background: var(--main-color); 
+    transform: translateY(-2px); 
+    box-shadow: 0 8px 18px rgba(6, 95, 82, 0.5); 
+}
+
+/* عند التحويم، النص يختفي بالتحريك لليمين */
+.Documents-btn:hover .text {
+    color: transparent;
+    transform: translateX(170px); 
+}
+
+/* عند التحويم، الأيقونة تتحرك لتغطي الزر بالكامل من اليسار لليمين */
+.Documents-btn:hover .folderContainer {
+    width: 170px; 
+    transform: translateX(0); 
+    right: auto;
+    left: 0; 
+}
+
+/* توسيط الأيقونة في الزر الكامل عند التحويم */
+.Documents-btn:hover .fileFront, .Documents-btn:hover .fileBack, .Documents-btn:hover .filePage {
+    /* (عرض الزر / 2) - (عرض الأيقونة / 2) */
+    transform: translate(calc(170px / 2 - 30px / 2), -50%); 
+}
+.Documents-btn:hover .filePage {
+    opacity: 1; 
+}
+
+/* تأثير الضغط (Active Effect) */
+.Documents-btn:active .folderContainer {
+    background-color: #0d836e; 
+}
+
+.Documents-btn:active {
+    border: 1px solid #0d836e;
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(6, 95, 82, 0.4);
+}
+
+/* مسافات صغيرة */
+.mt-12 { margin-top:12px; }
+
+/* footer */
+.footer { background:#065f52; color:#e0f2f1; padding:20px; margin-top:30px; text-align:center; font-size: 14px; }
+
+/* ================================================= */
+/* تحسين تنسيق المرفقات المطلوبة */
+/* ================================================= */
+
+#attachmentsList {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 18px !important;
+    justify-content: center !important; 
+    align-items: flex-start;
+    margin-top: 15px;
+  }
+  
+  /* تنسيق لعناصر المرفقات العامة - (جديد) */
+  #attachmentsList .attachment-item {
+      display: flex;
+      flex-direction: row; /* أعيده ليكون صفاً عادياً */
+      align-items: center;
+      justify-content: space-between;
+      width: 100%; /* العودة للعرض الكامل داخل الـ grid field */
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+      padding: 10px;
+  }
+  
+  #attachmentsList .attachment-item a {
+    font-size: 15px !important;
+    color: #065f52 !important;
+    font-weight: 700 !important;
+    margin-bottom: 0px !important;
+  }
+  
+  @media (max-width: 600px) {
+    #attachmentsList {
+      justify-content: center !important;
+    }
+  }
+
+/* ================================================= */
+/* ** تنسيق حالة الرفع (Upload Status) ** */
+/* ================================================= */
+
+.upload-status {
+    display: block;
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    min-height: 18px; 
+    color: #475569; 
+    transition: color 0.3s;
+}
+
+.upload-status.success {
+    color: #065f52; /* أخضر داكن للنجاح */
+}
+
+.upload-status.error {
+    color: #ef4444; /* أحمر للخطأ */
+}
+
+/* ================================================= */
+/* ** تنسيق عرض المرفقات الحالية وزر الحذف الصغير ** */
+/* ================================================= */
+
+.file-link-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    font-size: 15px;
+    color: #065f52;
+}
+
+.file-link-item .file-meta-size {
+    font-size: 13px; 
+    color: #64748b;
+    margin-inline-end: 10px;
+}
+
+.btn-delete-small { 
+    padding: 4px 8px; 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-size: 12px; 
+    font-weight: 600; 
+    background: #fee2e2; 
+    color: #991b1b; 
+    transition: all 0.2s;
+}
+
+.btn-delete-small:hover {
+    background: #fca5a5;
+    transform: translateY(-1px);
+}
+
+.file-status-text {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    color: #6b7280;
+}

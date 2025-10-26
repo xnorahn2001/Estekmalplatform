@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>منصة استكمال</title>
+  <link rel="icon" href="./images/logo.png" type="image/x-icon">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="loading-state"> <div id="splashScreen" class="splash-screen visible"> 
+      <div class="logo-container">
+          <img src="./images/logo.png" alt="شعار المنصة" class="logo splash-logo platform-logo">
+          <span class="logo-separator">|</span>
+          <img src="./images/logo_64007580567d2.png" alt="شعار رفاق" class="logo splash-logo rfaq-logo">
+      </div>
+      <div class="loading-bar"></div>
+  </div>
+  <div id="mainContent" class="main-content"> 
+      <header class="header">
+        <div class="container">
+          <div class="brand">
+            <img src="./images/logo.png"
+                 alt="شعار" class="logo">
+            <div>
+              <h1 class="title">منصة استكمال</h1>
+              <p class="subtitle">جمعية رفاق لرعاية الأيتام</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="container">
+        <section class="card">
+          <div class="card-header">
+            <h2 class="card-title">نظام المستفيدين</h2>
+            <p class="card-desc">قم بإدخال رقم السجل المدني لعرض الملف</p>
+          </div>
+          <div class="card-content">
+            <div class="row">
+              <input id="nationalId" class="input" type="text" inputmode="numeric" maxlength="10" placeholder="رقم السجل المدني (10 أرقام)">
+              <button id="searchBtn" class="btn">بحث</button>
+            </div>
+            
+            </div>
+        </section>
+
+        <section id="result" class="card hidden">
+          <div class="card-header">
+            <h3 class="card-title">البيانات الشخصية والإدارية</h3>
+          </div>
+          <div class="card-content">
+            <div class="grid">
+              <div class="field"><label>الاسم الكامل</label><p id="fullName"></p></div>
+              <div class="field"><label>رقم السجل المدني</label><p id="nid" class="mono"></p></div>
+              <div class="field"><label>رقم الملف</label><p id="fileNumber" class="mono"></p></div>
+              <div class="field"><label>رقم التسجيل</label><p id="registrationNumber" class="mono"></p></div>
+              <div class="field"><label>الفئة</label><p><span id="category" class="badge"></span> <span id="categoryNote" class="muted"></span></p></div>
+              <div class="field"><label>عدد التابعين</label><p id="dependentsCount"></p></div>
+              
+              <div class="field">
+                <label>رقم التواصل</label>
+                <p id="contactNumber" class="mono"></p>
+                <p class="hint">يجب أن يبدأ بـ 05 ويليه 8 أرقام</p>
+              </div>
+              
+              <div class="field"><label>رقم الاحتياطي</label><p id="secondaryContactNumber" class="mono"></p></div>
+              
+              <div class="field">
+                <label>رقم الحساب البنكي</label>
+                <p id="bankAccountNumber" class="mono"></p>
+                <p class="hint"> يجب أن يكون رقم IBAN ويبدأ بـ SA ويليه 22 رقمًا</p>
+              </div>
+              
+              <div class="field"><label>المبلغ الأساسي (ريال)</label><p id="baseAmount"></p></div>
+              <div class="field"><label>المبلغ الشهري (ريال)</label><p id="monthlyAmount"></p></div>
+              <div class="field full"><label>الحي السكني</label><p id="residentialArea"></p></div>
+              <div class="field full"><label>رابط الموقع</label><p><a id="locationLink" href="#" target="_blank">عرض على الخريطة</a></p></div>
+              <div class="field full"><label>إحداثية البيت</label><p id="houseCoordinates"></p></div>
+              
+              <div class="field full"><label>الملاحظات الإدارية</label><p id="notesDisplay"></p></div>
+            </div>
+          </div>
+          
+          <div class="card-footer actions">
+            <button id="editBtn" class="btn">تعديل بيانات الولي</button>
+          </div>
+
+          <div id="editBaseDataForm" class="card card-edit hidden">
+            <div class="card-content">
+              <h4>تعديل البيانات الشخصية والإدارية</h4>
+              <div class="input-group">
+                <label for="editBankAccount">رقم الحساب البنكي (الآيبان)</label>
+                <input id="editBankAccount" class="input" type="text" 
+                      placeholder="SAXXXXXXXXXXXXXXXXXXXXXX" maxlength="24" />
+              </div>
+
+              <div class="input-group">
+                <label for="editContact">رقم التواصل</label>
+                <input id="editContact" class="input" type="text" 
+                      placeholder="05XXXXXXXX" maxlength="10" />
+              </div>
+              
+              <div class="input-group">
+                <label for="editSecondaryContact">رقم احتياطي </label>
+                <input id="editSecondaryContact" class="input" type="text" 
+                      placeholder="05XXXXXXXX" maxlength="10" />
+              </div>
+
+              <div class="input-group">
+                <label for="editHouseCoordinates">موقع البيت</label>
+                <input id="editHouseCoordinates" class="input" type="text" 
+                      placeholder="مثال: 24.7589,46.6777" />
+              </div>
+
+              <div class="input-group">
+                <label for="editLocationLink">رابط الموقع</label>
+                <input id="editLocationLink" class="input" type="url" 
+                      placeholder="http://googleusercontent.com/maps..." />
+              </div>
+
+              <div class="input-group">
+                <label for="editNotes">الملاحظات</label>
+                <textarea id="editNotes" class="input" rows="3"></textarea>
+              </div>
+              
+              <div class="actions">
+                <button id="saveBaseDataBtn" class="btn">حفظ التعديلات</button>
+                <button id="cancelBaseDataEditBtn" class="btn secondary">إلغاء</button>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <section id="incomeCard" class="card hidden">
+          <div class="card-header">
+            <h3 class="card-title">بيانات الدخل والحالة الإضافية</h3>
+            <div class="actions income-actions">
+              <button id="editIncomeBtn" class="btn-edit">تعديل</button>
+              <button id="saveIncomeBtn" class="btn-save hidden">حفظ</button>
+              <button id="cancelIncomeBtn" class="btn-cancel hidden">إلغاء</button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="grid">
+              <div class="field income-input-container"><label>راتب الأم/الولي (ريال)</label>
+                <input id="guardianSalary" type="number" class="editable-income input-small" data-field="guardianSalary" disabled value="0">
+              </div>
+              <div class="field income-input-container"><label>راتب التقاعد (ريال)</label>
+                <input id="pensionIncome" type="number" class="editable-income input-small" data-field="pensionIncome" disabled value="0">
+              </div>
+              <div class="field income-input-container"><label>الضمان الاجتماعي (ريال)</label>
+                <input id="socialSecurityIncome" type="number" class="editable-income input-small" data-field="socialSecurityIncome" disabled value="0">
+              </div>
+              <div class="field income-input-container"><label> حساب المواطن (ريال)</label>
+                <input id="citizenAccountIncome" type="number" class="editable-income input-small" data-field="citizenAccountIncome" disabled value="0">
+              </div>
+              <div class="field income-input-container"><label>التأمينات الاجتماعية (ريال)</label>
+                <input id="insuranceIncome" type="number" class="editable-income input-small" data-field="insuranceIncome" disabled value="0">
+              </div>
+              
+              <div class="field income-input-container">
+                <label>المؤهل/الحالة الدارسية</label>
+                <select id="studentSocialStatus" class="editable-income input-small" data-field="studentSocialStatus" disabled>
+                  <option value="طالب جامعي">جامعي</option>
+                  <option value="أمية">أمية</option>
+                  <option value="ابتدائي">ابتدائي</option>
+                  <option value="متوسط">متوسط</option>
+                  <option value="ثانوي">ثانوي</option>
+                  <option value="تقرأ وتكتب">تقرأ وتكتب</option>
+                  
+                </select>
+              </div>
+              
+              <div class="field full total-income-field">
+                <label>إجمالي الدخل الشهري</label>
+                <p id="totalIncome" class="total-income"></p>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+        
+        <section id="allAttachmentsSummaryCard" class="card hidden">
+            <div class="card-header">
+                <h3 class="card-title">ملخص المرفقات الحالية</h3>
+            </div>
+            <div class="card-content" id="allAttachmentsSummary">
+                <p class="text-secondary">لا توجد ملفات مرفوعة حالياً في هذا السجل.</p>
+            </div>
+        </section>
+
+
+        <section id="attachmentsCard" class="card hidden">
+          <div class="card-header">
+            <h3 class="card-title">المرفقات المطلوبة</h3>
+          </div>
+          <div class="card-content">
+            <div class="grid attachments-grid">
+                <div class="field full"><label>المرفقات المرفوعة حالياً</label>
+                  <div id="attachmentsList"></div>
+                </div>
+
+                <div class="field full attachment-box">
+                  <label class="large-attachment-label"> تعريف المدارس والجامعات </label>
+                  <div id="educationalAttachments" class="file-link-container"></div>
+                  <span id="status-educational" class="upload-status"></span> <div class="attachment-container">
+                      <input type="file" id="upload-educational" class="input-file-hidden specific-upload" 
+                             data-attachment-type="educational" accept=".pdf,image/*" />
+                      <label for="upload-educational" class="Documents-btn">
+                           <span class="folderContainer">...SVG...</span>
+                           <p class="text">تحميل </p>
+                      </label>
+                  </div>
+                </div>
+                
+                <div class="field full attachment-box">
+                  <label class="large-attachment-label">مشهد من التقاعد </label>
+                  <div id="pensionAttachments" class="file-link-container"></div>
+                  <span id="status-pension" class="upload-status"></span> <div class="attachment-container">
+                      <input type="file" id="upload-pension" class="input-file-hidden specific-upload" 
+                             data-attachment-type="pension" accept=".pdf,image/*" />
+                      <label for="upload-pension" class="Documents-btn">
+                          <span class="folderContainer">...SVG...</span>
+                          <p class="text">تحميل </p>
+                      </label>
+                  </div>
+                </div>
+                
+                <div class="field full attachment-box">
+                  <label class="large-attachment-label">العنوان الوطني </label>
+                  <div id="nationalAddressAttachments" class="file-link-container"></div>
+                  <span id="status-nationalAddress" class="upload-status"></span> <div class="attachment-container">
+                      <input type="file" id="upload-nationalAddress" class="input-file-hidden specific-upload" 
+                             data-attachment-type="nationalAddress" accept=".pdf,image/*" />
+                      <label for="upload-nationalAddress" class="Documents-btn">
+                          <span class="folderContainer">...SVG...</span>
+                          <p class="text">تحميل</p>
+                      </label>
+                  </div>
+                </div>
+                
+                <div class="field full attachment-box">
+                  <label class="large-attachment-label">مشهد من الضمان </label>
+                  <div id="socialSecurityAttachments" class="file-link-container"></div>
+                  <span id="status-socialSecurity" class="upload-status"></span> <div class="attachment-container">
+                      <input type="file" id="upload-socialSecurity" class="input-file-hidden specific-upload" 
+                             data-attachment-type="socialSecurity" accept=".pdf,image/*" />
+                      <label for="upload-socialSecurity" class="Documents-btn">
+                          <span class="folderContainer">...SVG...</span>
+                          <p class="text">تحميل</p>
+                      </label>
+                  </div>
+                </div>
+
+                <div class="field full attachment-box">
+                  <label class="large-attachment-label">مشهد من حساب المواطن </label>
+                  <div id="citizenAccountAttachments" class="file-link-container"></div>
+                  <span id="status-citizenAccount" class="upload-status"></span> <div class="attachment-container">
+                      <input type="file" id="upload-citizenAccount" class="input-file-hidden specific-upload" 
+                             data-attachment-type="citizenAccount" accept=".pdf,image/*" />
+                      <label for="upload-citizenAccount" class="Documents-btn">
+                          <span class="folderContainer">...SVG...</span>
+                          <p class="text">تحميل</p>
+                      </label>
+                  </div>
+                </div>
+
+                <div class="field full attachment-box">
+                  <label class="large-attachment-label"> التأمينات</label>
+                  <div id="insuranceAttachments" class="file-link-container"></div>
+                  <span id="status-insurance" class="upload-status"></span> <div class="attachment-container">
+                      <input type="file" id="upload-insurance" class="input-file-hidden specific-upload" 
+                             data-attachment-type="insurance" accept=".pdf,image/*" />
+                      <label for="upload-insurance" class="Documents-btn">
+                          <span class="folderContainer">...SVG...</span>
+                          <p class="text">تحميل</p>
+                      </label>
+                  </div>
+                </div>
+
+                <div class="field full attachment-box">
+                  <label class="large-attachment-label">مرفق الحالة الاجتماعية للطالب الجامعي</label>
+                  <div id="studentStatusAttachments" class="file-link-container"></div>
+                  <span id="status-studentStatus" class="upload-status"></span> <div class="attachment-container">
+                      <input type="file" id="upload-studentStatus" class="input-file-hidden specific-upload" 
+                             data-attachment-type="studentStatus" accept=".pdf,image/*" />
+                      <label for="upload-studentStatus" class="Documents-btn">
+                          <span class="folderContainer">...SVG...</span>
+                          <p class="text">تحميل</p>
+                      </label>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="orphansCard" class="card hidden">
+          <div class="card-header">
+            <h3 class="card-title">بيانات الأيتام التابعين (<span id="orphansCount">0</span>)</h3>
+          </div>
+          <div class="card-content">
+            <div id="orphansList" class="orphans-list">
+              </div>
+          </div>
+        </section>
+
+      <div class="container">
+          <div id="alert" class="alert hidden"></div> 
+      </div> 
+
+      </main>
+
+      <footer class="footer">
+        <div class="container">
+          <p>© 2025 جمعية رفاق لرعاية الأيتام</p>
+        </div>
+      </footer>
+  </div> <script src="app.js"></script>
+</body>
+</html>
